@@ -13,7 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using static Disney.Context.DisneyContext;
+using Disney.Repositories;
+using Disney.Interfaces;
 
 namespace Disney
 {
@@ -37,10 +38,15 @@ namespace Disney
             });
 
             services.AddEntityFrameworkSqlServer();
-            services.AddDbContextPool<DisneysContext>(optionsAction: (provider, builder) => {
+            services.AddDbContextPool<DisneyContext>(optionsAction: (provider, builder) => {
                 builder.UseInternalServiceProvider(provider);
                 builder.UseSqlServer(connectionString: "Data Source=(localdb)\\MSSQLLocalDB;Database=DisneyDb;Integrated Security=True;");
             });
+
+            services.AddScoped<ICharacterRepository, CharacterRepository>();
+            services.AddScoped<IGenderRepository, GenderRepository>();
+            services.AddScoped<IMovieOrSerieRepository, MovieOrSerieRepository>();
+
 
         }
 

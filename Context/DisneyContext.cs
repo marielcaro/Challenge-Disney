@@ -7,11 +7,10 @@ using Disney.Entities;
 
 namespace Disney.Context
 {
-    public class DisneyContext
-    {
-        public class DisneysContext : DbContext
+   
+        public class DisneyContext : DbContext
         {
-            public DisneysContext(DbContextOptions options) : base(options)
+            public DisneyContext(DbContextOptions options) : base(options)
             {
 
             }
@@ -31,4 +30,3 @@ namespace Disney.Context
 
         }
     }
-}

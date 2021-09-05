@@ -4,16 +4,14 @@ using Disney.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Disney.Migrations
 {
-    [DbContext(typeof(DisneyContext.DisneysContext))]
-    [Migration("20210831234152_Primera")]
-    partial class Primera
+    [DbContext(typeof(DisneyContext))]
+    partial class DisneyContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,8 +98,8 @@ namespace Disney.Migrations
                     b.Property<float>("Score")
                         .HasColumnType("real");
 
-                    b.Property<int>("Title")
-                        .HasColumnType("int");
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
