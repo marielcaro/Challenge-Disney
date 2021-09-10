@@ -9,11 +9,13 @@ using Disney.Repositories;
 using Disney.Interfaces;
 using Disney.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Disney.Controllers
 {
     [ApiController]
     [Route(template: "api/[controller]")]
+    [Authorize]
     public class CharacterController: ControllerBase
     {
         private readonly ICharacterRepository _characterRepository;
