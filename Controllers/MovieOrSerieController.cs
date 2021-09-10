@@ -9,11 +9,13 @@ using Disney.Repositories;
 using Disney.Interfaces;
 using Disney.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Disney.Controllers
 {
     [ApiController]
     [Route(template: "api/[controller]")]
+    [Authorize]
     public class MovieOrSerieController : ControllerBase
     {
         private readonly IMovieOrSerieRepository _movieRepository;

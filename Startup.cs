@@ -20,6 +20,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using SendGrid.Extensions.DependencyInjection;
+using Disney.Services;
 
 namespace Disney
 {
@@ -112,11 +114,19 @@ namespace Disney
                     options.UseSqlServer(connectionString: "Data Source=(localdb)\\MSSQLLocalDB;Database=UsersDb;Integrated Security=True;");
             });
 
+            // Inyección de dependencia de repositorios:
             services.AddScoped<ICharacterRepository, CharacterRepository>();
             services.AddScoped<IGenderRepository, GenderRepository>();
             services.AddScoped<IMovieOrSerieRepository, MovieOrSerieRepository>();
 
+            //Inyección de dependencia del mail:
+            services.AddSendGrid(o =>
+            {
+                o.ApiKey = "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"; //API KEY
+            });
 
+            services.AddScoped<IMailService, MailService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -132,6 +142,8 @@ namespace Disney
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

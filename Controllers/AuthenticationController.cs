@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Disney.Interfaces;
 
 namespace Disney.Controllers
 {
@@ -21,10 +22,12 @@ namespace Disney.Controllers
         //Registro
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public AuthenticationController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly IMailService _mailService;
+        public AuthenticationController(UserManager<User> userManager, SignInManager<User> signInManager, IMailService mailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _mailService = mailService;
         }
 
         [HttpPost]
@@ -59,12 +62,15 @@ namespace Disney.Controllers
 
             }
 
+           await  _mailService.SendMail(user);
 
             return Ok(new
             {
                 status = "Success",
                 Message = $"User created Succesfully!"
-            });
+               
+
+            }); ;
         }
 
 

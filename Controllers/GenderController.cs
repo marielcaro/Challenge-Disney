@@ -8,11 +8,13 @@ using Disney.Entities;
 using Disney.Repositories;
 using Disney.Interfaces;
 using Disney.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Disney.Controllers
 {
     [ApiController]
     [Route(template: "api/[controller]")]
+    [Authorize]
     public class GenderController: ControllerBase
     {
         private readonly IGenderRepository _genderRepository;
