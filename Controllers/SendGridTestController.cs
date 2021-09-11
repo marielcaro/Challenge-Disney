@@ -23,7 +23,7 @@ namespace Disney.Controllers
         public async Task<IActionResult> PruebaEmail()
         {
             //Código traído de la página de SendGrid
-            var apiKey = "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"; //API KEY
+            var apiKey = "No me dejan subir la API KEY"; //API KEY
             var client = new SendGridClient(apiKey); //crea una instancia del send grid
             var from = new EmailAddress("marielcaro8@gmail.com", "Example User"); //origen- emisor
             var subject = "Sending with Twilio SendGrid is Fun";
