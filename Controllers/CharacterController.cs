@@ -60,70 +60,37 @@ namespace Disney.Controllers
             if (id != 0) // FILTRO POR ID
             {
                 characters = characters.Where(x => x.Id == id).ToList(); //esto sirve para el filtrado
-
-                foreach (var character in characters)
-                {
-                    characterViewModel.Add(new DetailCharacterViewModel
-                    { 
-                        Id= character.Id,
-                        Name = character.Name,
-                        Image = character.Image,
-                        Age= character.Age,
-                        Weight=character.Weight,
-                        History=character.History,
-                        MoviesSeries=character.MovieOrSeries.Any() ? character.MovieOrSeries.Select(x => new MoviesViewModel
-                        {
-                            Title= x.Title,
-                            Image=x.Image
-                        }).ToList() : null
-                    }); 
-                }
+                         
 
             }
             if (!string.IsNullOrEmpty(name)) // FILTRO POR NOMBRE
             {
                 characters = characters.Where(x => x.Name == name).ToList();
-                foreach (var character in characters)
-                {
-                    characterViewModel.Add(new DetailCharacterViewModel
-                    {
-                        Id = character.Id,
-                        Name = character.Name,
-                        Image = character.Image,
-                        Age = character.Age,
-                        Weight = character.Weight,
-                        History = character.History,
-                        MoviesSeries = character.MovieOrSeries.Any() ? character.MovieOrSeries.Select(x => new MoviesViewModel
-                        {
-                            Title = x.Title,
-                            Image = x.Image
-                        }).ToList() : null
-                    });
-                }
+               
             }
             if (age>0) //FILTRO POR EDAD
             {
                 characters = characters.Where(x => x.Age == age).ToList();
-                foreach (var character in characters)
-                {
-                    characterViewModel.Add(new DetailCharacterViewModel
-                    {
-                        Id = character.Id,
-                        Name = character.Name,
-                        Image = character.Image,
-                        Age = character.Age,
-                        Weight = character.Weight,
-                        History = character.History,
-                        MoviesSeries = character.MovieOrSeries.Any() ? character.MovieOrSeries.Select(x => new MoviesViewModel
-                        {
-                            Title = x.Title,
-                            Image = x.Image
-                        }).ToList() : null
-                    });
-                }
+            
             }
 
-         
+            foreach (var character in characters)
+            {
+                characterViewModel.Add(new DetailCharacterViewModel
+                {
+                    Id = character.Id,
+                    Name = character.Name,
+                    Image = character.Image,
+                    Age = character.Age,
+                    Weight = character.Weight,
+                    History = character.History,
+                    MoviesSeries = character.MovieOrSeries.Any() ? character.MovieOrSeries.Select(x => new MoviesViewModel
+                    {
+                        Title = x.Title,
+                        Image = x.Image
+                    }).ToList() : null
+                });
+            }
 
             if (!characters.Any()) return BadRequest(error: $"El personaje {id} no existe");
 
@@ -142,22 +109,7 @@ namespace Disney.Controllers
             if (idMovie > 0) // ID DE PELÍCULA
             {
                 videos = videos.Where(x=>x.Id==idMovie).ToList(); //esto sirve para el filtrado
-
-
-
-                foreach (var video in videos)
-                {
-                    videoViewModel.Add(new DetailMovieViewModel
-                    {
-                        Id = video.Id,
-                        Title = video.Title,
-                        Characters = video.Characters.Any() ? video.Characters.Select(x => new CharactersViewModel
-                        {
-                            Name = x.Name,
-                            Age = x.Age
-                        }).ToList() : null
-                    });
-                }
+     
 
             }
 
@@ -166,25 +118,21 @@ namespace Disney.Controllers
             {
                 videos = videos.Where(x => x.Title == TitleMovie).ToList(); //esto sirve para el filtrado
 
-
-
-                foreach (var video in videos)
-                {
-                    videoViewModel.Add(new DetailMovieViewModel
-                    {
-                        Id = video.Id,
-                        Title = video.Title,
-                        Characters = video.Characters.Any() ? video.Characters.Select(x => new CharactersViewModel
-                        {
-                            Name = x.Name,
-                            Age = x.Age
-                        }).ToList() : null
-                    });
-                }
-
             }
 
-
+            foreach (var video in videos)
+            {
+                videoViewModel.Add(new DetailMovieViewModel
+                {
+                    Id = video.Id,
+                    Title = video.Title,
+                    Characters = video.Characters.Any() ? video.Characters.Select(x => new CharactersViewModel
+                    {
+                        Name = x.Name,
+                        Age = x.Age
+                    }).ToList() : null
+                });
+            }
 
             if (!videos.Any()) return BadRequest(error: $"El personaje {idMovie} no existe");
 

@@ -6,6 +6,7 @@ using Disney.Interfaces;
 using Disney.Entities;
 using Disney.Context;
 using Disney.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Disney.Repositories
 {
@@ -25,7 +26,8 @@ namespace Disney.Repositories
 
         public List<MovieOrSerie> GetAllMoviesOrSeries()
         {
-            return GetAllEntities();
+           
+         return GetAllEntities();
 
         }
 

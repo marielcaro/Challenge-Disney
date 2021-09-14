@@ -13,6 +13,7 @@ namespace Disney.Repositories
 
     {
         private readonly TContext _dbContext;
+     
 
         protected BaseRepository(TContext dbContext)
         {

@@ -122,7 +122,7 @@ namespace Disney
             //Inyección de dependencia del mail:
             services.AddSendGrid(o =>
             {
-                o.ApiKey = "No me dejan subir la api key"; //API KEY
+                o.ApiKey = "poner aquí la api key"; //API KEY
             });
 
             services.AddScoped<IMailService, MailService>();

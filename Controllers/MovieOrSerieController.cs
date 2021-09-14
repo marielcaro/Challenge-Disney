@@ -47,26 +47,19 @@ namespace Disney.Controllers
                 }); ;
             }
 
-            if (!string.IsNullOrEmpty(Order))
+            switch (Order.ToUpper())
             {
-                if (Order.Equals("ASC"))
-                {
+                case "ASC":
                     return Ok(movieViewModel.OrderBy(x => x.Id).ToList()); //ORDEN ASCENDENTE
-                }
-                else
-
-                    if (Order.Equals("DESC"))
-                {
+                    
+                case "DESC":
                     return Ok(movieViewModel.OrderByDescending(x => x.Id).ToList()); // ORDEN DESCENDENTE
-                }
-                else return Ok(movieViewModel);
-
+                    
+                default:
+                    return Ok(movieViewModel); // SIN PREFERENCIAS DE ORDEN
+                    
             }
-            else
-            {
-                return Ok(movieViewModel); //SIN PREFERENCIAS DE ORDEN
-            }
-          
+                      
         }
 
         // DEVUELVE UNA PELÍCULA O SERIE EN PARTICULAR
@@ -82,46 +75,30 @@ namespace Disney.Controllers
             {
                 movies = movies.Where(x => x.Id == id).ToList(); 
 
-                foreach (var movie in movies)
-                {
-                    movieViewModel.Add(new DetailMovieViewModel
-                    {
-                        Id = movie.Id,
-                        Title = movie.Title,
-                        Image = movie.Image,
-                        CreationDate = movie.CreationDate,
-                        Score = movie.Score,
-                        Characters = movie.Characters.Any() ? movie.Characters.Select(x => new CharactersViewModel
-                        {
-                            Name = x.Name,
-                            Age = x.Age
-                        }).ToList() : null
-                    });
-                }
-
             }
             if (!string.IsNullOrEmpty(title))
             {
                 movies = movies.Where(x => x.Title == title).ToList();
-                foreach (var movie in movies)
-                {
-                    movieViewModel.Add(new DetailMovieViewModel
-                    {
-                        Id = movie.Id,
-                        Title = movie.Title,
-                        Image = movie.Image,
-                        CreationDate = movie.CreationDate,
-                        Score = movie.Score,
-                        Characters = movie.Characters.Any() ? movie.Characters.Select(x => new CharactersViewModel
-                        {
-                            Name = x.Name,
-                            Age = x.Age
-                        }).ToList() : null
-                    });
-                }
+              
             }
 
-         
+
+            foreach (var movie in movies)
+            {
+                movieViewModel.Add(new DetailMovieViewModel
+                {
+                    Id = movie.Id,
+                    Title = movie.Title,
+                    Image = movie.Image,
+                    CreationDate = movie.CreationDate,
+                    Score = movie.Score,
+                    Characters = movie.Characters.Any() ? movie.Characters.Select(x => new CharactersViewModel
+                    {
+                        Name = x.Name,
+                        Age = x.Age
+                    }).ToList() : null
+                });
+            }
 
             if (!movies.Any()) return BadRequest(error: $"Esta película/serie {id} no existe");
 
@@ -141,46 +118,27 @@ namespace Disney.Controllers
             {
                 genders = genders.Where(x => x.Id == idGender).ToList(); //esto sirve para el filtrado
 
-
-
-                foreach (var gender in genders)
-                {
-                    genderViewModel.Add(new GenderViewModel
-                    {
-                        Id = gender.Id,
-                        Name = gender.Name,
-                        MovieOrSeries = gender.MovieOrSeries.Any() ? gender.MovieOrSeries.Select(x => new MoviesViewModel
-                        {
-                            Title = x.Title,
-                            Image = x.Image
-                        }).ToList() : null
-                    });
-                }
-
             }
             if (!string.IsNullOrEmpty(NameGender))
             {
                 genders = genders.Where(x => x.Name == NameGender).ToList(); //esto sirve para el filtrado
 
-
-
-                foreach (var gender in genders)
-                {
-                    genderViewModel.Add(new GenderViewModel
-                    {
-                        Id = gender.Id,
-                        Name = gender.Name,
-                        MovieOrSeries = gender.MovieOrSeries.Any() ? gender.MovieOrSeries.Select(x => new MoviesViewModel
-                        {
-                            Title = x.Title,
-                            Image = x.Image
-                        }).ToList() : null
-                    });
-                }
-
             }
 
 
+            foreach (var gender in genders)
+            {
+                genderViewModel.Add(new GenderViewModel
+                {
+                    Id = gender.Id,
+                    Name = gender.Name,
+                    MovieOrSeries = gender.MovieOrSeries.Any() ? gender.MovieOrSeries.Select(x => new MoviesViewModel
+                    {
+                        Title = x.Title,
+                        Image = x.Image
+                    }).ToList() : null
+                });
+            }
 
             if (!genders.Any()) return BadRequest(error: $"El personaje {idGender} no existe");
 
